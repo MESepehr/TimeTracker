@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One');
+
+body{
+    margin:0;
+    padding:0;
+    background-color: #222222;
+}
+
+h1 { 
+    color: #ffffff;
+    font-family: 'Julius Sans One', sans-serif;
+    font-size: 30px; 
+    font-weight: 5; 
+    margin:0;
+}
+
+.headersection{
+    width:100%;
+    background-color: #222222;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+
+    border-bottom-width:1px;
+    border-bottom-color:#fe921f;
+    border-bottom-style: solid;
+}
+
+
+p { color: #adb7bd; font-family: 'Lucida Sans', Arial, sans-serif; font-size: 16px; line-height: 26px; text-indent: 30px; margin: 0; }
+
+a { color: #fe921f; text-decoration: underline; }
+
+a:hover { color: #ffffff }
+
+.date { background: #fe921f; color: #ffffff; display: inline-block; font-family: 'Lato', sans-serif; font-size: 12px; font-weight: bold; line-height: 12px; letter-spacing: 1px; margin: 0 0 30px; padding: 10px 15px 8px; text-transform: uppercase; }
+

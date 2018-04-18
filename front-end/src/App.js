@@ -1,4 +1,6 @@
 import React from 'react';
+import './App.css';
+
 
 
 export default class App extends React.Component
@@ -6,7 +8,9 @@ export default class App extends React.Component
     render()
     {
         return(
-            <h1>Hello Timer</h1>
+            <div className="non">
+                <div className="headersection"><h1>Stop Watch</h1></div>
+            </div>
         );
     }
 }
