@@ -4,11 +4,11 @@ body{
     margin:0;
     padding:0;
     background-color: #222222;
+    font-family: 'Julius Sans One', sans-serif;
 }
 
 h1 { 
     color: #ffffff;
-    font-family: 'Julius Sans One', sans-serif;
     font-size: 30px; 
     font-weight: 5; 
     margin:0;
@@ -24,6 +24,20 @@ h1 {
     border-bottom-width:1px;
     border-bottom-color:#fe921f;
     border-bottom-style: solid;
+}
+
+.footer {
+    background-color: #111111;
+    position: absolute;
+    color:#888888;
+    left: 0;
+    bottom: 0;
+    height: 20px;
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    font-size: 10px; 
+    line-height: 20px;
 }
 
 

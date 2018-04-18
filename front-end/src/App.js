@@ -10,6 +10,12 @@ export default class App extends React.Component
         return(
             <div className="non">
                 <div className="headersection"><h1>Stop Watch</h1></div>
+                <div>
+
+                </div>
+                <div>
+                    <div className="footer">Icons made by Yannick from www.flaticon.com is licensed by CC 3.0 BY</div>
+                </div>
             </div>
         );
     }
