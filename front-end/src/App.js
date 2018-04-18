@@ -13,9 +13,12 @@ export default class App extends React.Component
                 <div>
 
                 </div>
+                
+                <div className="footer">
                 <div>
-                    <div className="footer">Icons made by Yannick from www.flaticon.com is licensed by CC 3.0 BY</div>
+                    <button className="main-button">Stop Watch</button><button className="main-button">History</button>
                 </div>
+                Icons made by Yannick from www.flaticon.com is licensed by CC 3.0 BY</div>
             </div>
         );
     }

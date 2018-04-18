@@ -1,9 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Julius+Sans+One');
 
+:root {
+    --main-bg-color: #222222;    
+    --footer-color: #111111;    
+    --orange-color: #fe921f;
+    --gray-bg-color: #444444;
+}
+
 body{
     margin:0;
     padding:0;
-    background-color: #222222;
+    background-color: var(--main-bg-color);
     font-family: 'Julius Sans One', sans-serif;
 }
 
@@ -16,29 +23,53 @@ h1 {
 
 .headersection{
     width:100%;
-    background-color: #222222;
+    background-color: var(--main-bg-color);
     height: 60px;
     line-height: 60px;
     text-align: center;
 
     border-bottom-width:1px;
-    border-bottom-color:#fe921f;
+    border-bottom-color: var(--orange-color);
     border-bottom-style: solid;
 }
 
 .footer {
-    background-color: #111111;
+    background-color: var(--footer-color);
     position: absolute;
     color:#888888;
     left: 0;
     bottom: 0;
-    height: 20px;
+    height: 100px;
     width: 100%;
     overflow: hidden;
     text-align: center;
     font-size: 10px; 
-    line-height: 20px;
+    line-height: 30px;
 }
+
+.main-button{
+    width:50%;
+    height:50px;
+}
+
+button {
+    background-color: var(--gray-bg-color); 
+    border: none;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+
+    border-width:1px;
+    border-color: var(--main-bg-color);
+    border-style: solid;
+
+}
+
+button:hover {
+    background-color: var(--orange-color);
+}
+
 
 
 p { color: #adb7bd; font-family: 'Lucida Sans', Arial, sans-serif; font-size: 16px; line-height: 26px; text-indent: 30px; margin: 0; }
