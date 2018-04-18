@@ -4,7 +4,8 @@
     --main-bg-color: #222222;    
     --footer-color: #111111;    
     --orange-color: #fe921f;
-    --orange-color-burnt: #fe661f;
+    --orange-color-buttons: #fe661f;
+    --orange-color-burnt: #fe261f;
     --gray-bg-color: #444444;
 }
 
@@ -37,7 +38,7 @@ h1 {
 .footer {
     background-color: var(--footer-color);
     position: absolute;
-    color:#888888;
+    color:var(--orange-color);
     left: 0;
     bottom: 0;
     height: 80;
@@ -75,7 +76,7 @@ button:hover {
     -moz-transition: all .2s ease-in;
     -o-transition: all .2s ease-in;
     -webkit-transition: all .2s ease-in;
-    background: var(--orange-color); 
+    background: var(--orange-color-buttons); 
 }
 
 button:active  {
