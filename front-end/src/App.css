@@ -4,6 +4,7 @@
     --main-bg-color: #222222;    
     --footer-color: #111111;    
     --orange-color: #fe921f;
+    --orange-color-burnt: #fe661f;
     --gray-bg-color: #444444;
 }
 
@@ -39,7 +40,7 @@ h1 {
     color:#888888;
     left: 0;
     bottom: 0;
-    height: 100px;
+    height: 80;
     width: 100%;
     overflow: hidden;
     text-align: center;
@@ -53,6 +54,10 @@ h1 {
 }
 
 button {
+    -moz-transition: all .2s ease-in;
+    -o-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+
     background-color: var(--gray-bg-color); 
     border: none;
     color: white;
@@ -67,7 +72,17 @@ button {
 }
 
 button:hover {
-    background-color: var(--orange-color);
+    -moz-transition: all .2s ease-in;
+    -o-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    background: var(--orange-color); 
+}
+
+button:active  {
+    -moz-transition: all .02s ease-in;
+    -o-transition: all .02s ease-in;
+    -webkit-transition: all .02s ease-in;
+    background: var(--orange-color-burnt); 
 }
 
 
