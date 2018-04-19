@@ -6,8 +6,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class Api
+use App\Entity\Trackedtime;
+
+class Api extends Controller
 {
     /**
      * @Route("/api/saveOrUpdateLastDuration")
@@ -17,6 +20,14 @@ class Api
         try
         {
             $parsedRequest = json_decode($request->getContent());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $newDuration = new Trackedtime();
+            $newDuration->setDuration($parsedRequest->duration) ;
+
+            $entityManager->persist($newDuration);
+            $entityManager->flush();
+
             return new Response("Hi ".json_encode($parsedRequest->duration));
         }
         catch(Exception $e)
