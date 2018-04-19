@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './stopwatch.css';
 
 
 export default class StopWatch extends React.Component
@@ -49,7 +50,12 @@ export default class StopWatch extends React.Component
         /**milisecond part */
         showMiliSecondPart()
         {
-            return this.numToString(Math.floor(this.mil/10));
+            return '\t:\t'+this.numToString(Math.floor(this.mil/10));
+        }
+
+        showSecondPart()
+        {
+            return this.numToString(this.sec);
         }
 
         /**Takes number and returns string in the 2 characters format : 1 -> '01' , 32 -> '32' */
@@ -93,7 +99,7 @@ export default class StopWatch extends React.Component
         }
         /*<div className="stop-watch"><b> <span style={houreStyle}>{this.state.hour}:</span><span>00</span><span className="milisecond-part">:00</span> </b></div>*/
         return(
-            <div className="stop-watch"><b><span className="milisecond-part">{this.showMiliSecondPart()}</span> </b></div>
+            <div className="stop-watch"><b><span>{this.showSecondPart()}</span><span className="milisecond-part">{this.showMiliSecondPart()}</span> </b></div>
         );
     }
 }

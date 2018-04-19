@@ -1,0 +1,20 @@
+*{
+    -moz-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    -webkit-transition: all .2s ease;
+}
+
+.stop-watch{
+    font-size:60px;
+    color:#ddd;
+    width:100%;
+    text-align:center;
+    font-family: 'Alfa Slab One', cursive;
+}
+
+.milisecond-part{
+    margin-top:40px;
+    margin-left:5px;
+    font-size:20px;
+    position:absolute;
+}
