@@ -9,15 +9,16 @@ export default class App extends React.Component
         return(
             <div className="non">
                 <div className="headersection"><h1>Stop Watch</h1></div>
+                <button className="main-button">Stop Watch</button><button className="main-button">History</button>
                 <div>
                     <div className="stop-watch"><b> <span>00:</span><span>00</span><span className="milisecond-part">:00</span> </b></div>
+                    <button className="stop-watch-toggle">START</button>
                 </div>
                 
                 <div className="footer">
-                <div>
-                    <button className="main-button">Stop Watch</button><button className="main-button">History</button>
+                    <button className="save-record-button">Save Record</button>
+                    <div>Icons made by Yannick from www.flaticon.com is licensed by CC 3.0 BY</div>       
                 </div>
-                Icons made by Yannick from www.flaticon.com is licensed by CC 3.0 BY</div>
             </div>
         );
     }
