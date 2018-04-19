@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One');
+
+:root {
+    --main-bg-color: #222222;    
+    --footer-color: #111111;    
+    --orange-color: #fe921f;
+    --orange-color-buttons: #fe661f;
+    --orange-color-burnt: #fe261f;
+    --gray-bg-color: #444444;
+    --wight-color: #ffffff;
+}
+
+body{
+    margin:0;
+    padding:0;
+    background-color: var(--main-bg-color);
+    font-family: 'Julius Sans One', sans-serif;
+}
+
+h1 { 
+    color: var(--wight-color);
+    font-size: 30px; 
+    font-weight: 5; 
+    margin:0;
+}
+
+.headersection{
+    width:100%;
+    background-color: var(--main-bg-color);
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+
+    border-bottom-width:2px;
+    border-bottom-color: var(--orange-color);
+    border-bottom-style: solid;
+}
+
+.footer {
+    background-color: var(--footer-color);
+    position: absolute;
+    color:var(--wight-color);
+    left: 0;
+    bottom: 0;
+    height: 80;
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    font-size: 10px; 
+    line-height: 30px;
+}
+
+.main-button{
+    width:50%;
+    height:50px;
+}
+
+button {
+    -moz-transition: all .2s ease-in;
+    -o-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+
+    background-color: var(--gray-bg-color); 
+    border: none;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+
+    border-width:1px;
+    border-color: var(--main-bg-color);
+    border-style: solid;
+
+}
+
+button:hover {
+    -moz-transition: all .2s ease-in;
+    -o-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    background: var(--orange-color-buttons); 
+}
+
+button:active  {
+    -moz-transition: all .02s ease-in;
+    -o-transition: all .02s ease-in;
+    -webkit-transition: all .02s ease-in;
+    background: var(--orange-color-burnt); 
+}
+
+
+
+p { color: #adb7bd; font-family: 'Lucida Sans', Arial, sans-serif; font-size: 16px; line-height: 26px; text-indent: 30px; margin: 0; }
+
+a { color: #fe921f; text-decoration: underline; }
+
+a:hover { color: #ffffff }
+
+.date { background: #fe921f; color: #ffffff; display: inline-block; font-family: 'Lato', sans-serif; font-size: 12px; font-weight: bold; line-height: 12px; letter-spacing: 1px; margin: 0 0 30px; padding: 10px 15px 8px; text-transform: uppercase; }
+
