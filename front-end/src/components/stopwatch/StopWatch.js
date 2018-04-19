@@ -147,25 +147,21 @@ export default class StopWatch extends React.Component
 
     render()
     {
-
-        let lastSec = this.sec ;
-        let lastMin = this.min ;
-        let lastHou = this.hour ;
-
         this.splitTimeInStrings();
 
-        var colorFull = "stop-watch-element-glow";
-        var defaultColor = "stop-watch-element";
-
-        var houreStyle = (lastHou!==this.hour)?colorFull:defaultColor;
-        var minStyle = (lastMin!==this.min)?colorFull:defaultColor;
+        const stopWatchPose = {} ;
+        if(this.textBody!==undefined)
+        {
+            stopWatchPose.paddingRight = (this.mainStopWatchBody.offsetWidth-this.textBody.offsetWidth)/2+'px';
+            //console.log(this.textBody.offsetWidth+' vs '+this.mainStopWatchBody.offsetWidth);
+        }
        
         /*<div className="stop-watch"><b> <span style={houreStyle}>{this.state.hour}:</span><span>00</span><span className="milisecond-part">:00</span> </b></div>*/
         return(
-            <div className="stop-watch"><b>
+            <div className="stop-watch" style={stopWatchPose} ref={ref => this.mainStopWatchBody = ref}><b ref={ref => this.textBody = ref}>
                 <span>{this.showDayPart()}</span><span>{this.showDaySeparator()}</span>
-                <span className={houreStyle}>{this.showHourePart()}</span><span>{this.showHoureSeparator()}</span>
-                <span className={minStyle}>{this.showMinutesPart()}</span><span>{this.showMinutesSeparator()}</span>
+                <span>{this.showHourePart()}</span><span>{this.showHoureSeparator()}</span>
+                <span>{this.showMinutesPart()}</span><span>{this.showMinutesSeparator()}</span>
                 <span>{this.showSecondPart()}</span>
                 <span className="milisecond-part">{this.showMiliSecondPart()}</span> </b>
             </div>

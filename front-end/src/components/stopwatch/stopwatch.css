@@ -2,29 +2,15 @@
 
 
 .stop-watch{
-    font-size:60px;
-    color:#ddd;
-    background-color:#f00;
-    text-align:right;
-    width:40px;
-    
-    font-family: 'Inconsolata', monospace;
-}
-
-.stop-watch-element{
     -moz-transition: all 1s ease;
     -o-transition: all 1s ease;
     -webkit-transition: all 1s ease;
 
+    font-size:60px;
     color:#ddd;
-}
-
-.stop-watch-element-glow{
-    -moz-transition: all 0s ease;
-    -o-transition: all 0s ease;
-    -webkit-transition: all 0s ease;
-
-    color:#fe921f;
+    text-align:right;
+    
+    font-family: 'Inconsolata', monospace;
 }
 
 .milisecond-part{
