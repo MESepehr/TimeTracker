@@ -5,13 +5,23 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class Api
 {
     /**
      * @Route("/api/saveOrUpdateLastDuration")
+     * @Method({"POST"})
      */
     public function index(Request $request) {
-        return new Response("Hi");
+        try
+        {
+            $parsedRequest = json_decode($request->getContent());
+            return new Response("Hi ".json_encode($parsedRequest->duration));
+        }
+        catch(Exception $e)
+        {
+            return new Response("Error : {$e->getMessage()}");
+        }
     }
 }
