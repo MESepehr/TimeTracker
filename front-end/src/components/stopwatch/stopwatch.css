@@ -1,4 +1,6 @@
-*{
+@import url('https://fonts.googleapis.com/css?family=Inconsolata')
+
+{
     -moz-transition: all .2s ease;
     -o-transition: all .2s ease;
     -webkit-transition: all .2s ease;
@@ -9,11 +11,10 @@
     color:#ddd;
     width:100%;
     text-align:center;
-    font-family: 'Alfa Slab One', cursive;
+    
+    font-family: 'Inconsolata', monospace;
 }
 
 .milisecond-part{
-    margin-top:40px;
     font-size:20px;
-    position:absolute;
 }

@@ -145,64 +145,42 @@ export default class StopWatch extends React.Component
     {
         this.splitTimeInStrings();
 
-        console.log("this.level : "+this.level)
-        /*const houreStyle = {
-            color:'#'+Math.floor(Math.random()*0xffffff).toString(16)
-        }*/
-        const milStyle = {
-            //position:'absolute',
-           // marginLeft:'300px',
+        const numberWidth = 100 ;
+        const dividerWidth = 20 ;
+        let width = (this.level+1)*numberWidth+this.level*dividerWidth ;
 
-            color:'#f00'
-        }
-        const secStyle = {
-           // position:'absolute',
-           // marginLeft:'100px',
+        var styleArray = [] ;
 
-            color:'#0f0'
-        }
-        const minDivStyle = {
-           // position:'absolute',
-          //  marginLeft:'0px'
-        }
-        const minStyle = {
-           // position:'absolute',
-           // marginLeft:'0px',
+        var X = width/2;
 
-            color:'#00f'
+        for(var i = 0 ; i<=this.level ; i++)
+        {
+            console.log("X for number : "+X);
+            styleArray.push({
+                //position:'absolute',
+                //marginLeft: (X-=numberWidth)+'px'
+            });
+            
+            console.log("X for divider : "+X);
+            styleArray.push({
+                //position:'absolute',
+                //marginLeft: (X-=dividerWidth)+'px'
+            });
         }
-        const houDivStyle = {
-           // position:'absolute',
-          //  marginLeft:'100px',
 
-            color:'#ff0'
+        const stopWatchContainer = {
+            width:'100%',
+            height:'60px'
         }
-        const houStyle = {
-          //  position:'absolute',
-           // marginLeft:'100px',
-
-            color:'#f0f'
-        }
-        const dayDivStyle = {
-           // position:'absolute',
-          //  marginLeft:'-100px',
-
-            color:'#fff'
-        }
-        const dayStyle = {
-           // position:'absolute',
-          //  marginLeft:'-100px',
-
-            color:'#000'
-        }
+       
         /*<div className="stop-watch"><b> <span style={houreStyle}>{this.state.hour}:</span><span>00</span><span className="milisecond-part">:00</span> </b></div>*/
         return(
-            <div className="stop-watch"><b>
-                <span style={dayStyle}>{this.showDayPart()}</span><span style={dayDivStyle}>{this.showDaySeparator()}</span>
-                <span style={houStyle}>{this.showHourePart()}</span><span style={houDivStyle}>{this.showHoureSeparator()}</span>
-                <span style={minStyle}>{this.showMinutesPart()}</span><span style={minDivStyle}>{this.showMinutesSeparator()}</span>
-                <span style={secStyle}>{this.showSecondPart()}</span>
-                <span style={milStyle} className="milisecond-part">{this.showMiliSecondPart()}</span> </b>
+            <div className="stop-watch" style={stopWatchContainer}><b>
+                <span style={styleArray[8]} className="day-part">{this.showDayPart()}</span><span style={styleArray[7]}>{this.showDaySeparator()}</span>
+                <span style={styleArray[6]}>{this.showHourePart()}</span><span style={styleArray[5]}>{this.showHoureSeparator()}</span>
+                <span style={styleArray[4]}>{this.showMinutesPart()}</span><span style={styleArray[3]}>{this.showMinutesSeparator()}</span>
+                <span style={styleArray[2]}>{this.showSecondPart()}</span>
+                <span style={styleArray[0]} className="milisecond-part">{this.showMiliSecondPart()}</span> </b>
             </div>
         );
     }
