@@ -17,7 +17,14 @@ export default class App extends React.Component
    toggleStopWatch()
    {
        this.setState({isCounting:!this.state.isCounting});
-       this.stopWatchComponent.stop();
+        if(this.state.isCounting)
+        {
+            this.stopWatchComponent.stop();
+        }
+        else
+        {
+            this.stopWatchComponent.start();
+        } 
    }
 
 

@@ -20,13 +20,16 @@ export default class StopWatch extends React.Component
 
     start()
     {
-        alert('start');
+        this.stop();
     }
 
     render()
     {
+        const houreStyle = {
+            color:'#'+Math.floor(Math.random()*0xffffff).toString(16)
+        }
         return(
-            <div className="stop-watch"><b> <span>{this.state.hour}:</span><span>00</span><span className="milisecond-part">:00</span> </b></div>
+            <div className="stop-watch"><b> <span style={houreStyle}>{this.state.hour}:</span><span>00</span><span className="milisecond-part">:00</span> </b></div>
         );
     }
 }
