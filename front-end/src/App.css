@@ -106,12 +106,12 @@ button:active  {
     background: var(--orange-color-burnt); 
 }
 
-    @media only screen and (max-height: 768px) {
+    @media only screen and (max-height: 600px) {
         [class*="stop-watch"] {
             margin-top:50px;
         }
     }
-    @media only screen and (min-height: 768px) {
+    @media only screen and (min-height: 600px) {
         [class*="stop-watch"] {
             margin-top:150px;
         }
@@ -119,14 +119,23 @@ button:active  {
 
 .stop-watch-toggle{
     width:100%;
-    height: var(--main-buttons-height);
     background-color:var(--main-bg-color);
-    font-size:35px;
+    height: var(--main-buttons-height);
+    font-size:30px;
     text-decoration: none;
+}
+
+
+@media only screen and (min-width: 600px) {
+    [class*="stop-watch-toggle"] {
+        width:50%;
+        height: var(--main-buttons-height-X3);
+    }
 }
 
 .stop-watch-toggle:hover{
     background-color:var(--main-bg-color);
+    color:var(--orange-color-buttons);
 }
 
 .save-record-button{

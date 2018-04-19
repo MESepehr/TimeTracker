@@ -27,6 +27,12 @@ export default class App extends React.Component
         } 
    }
 
+   saveUserRecord()
+   {
+        this.setState({isCounting:false});
+        this.stopWatchComponent.stop();
+   }
+
 
 
     render()
@@ -38,10 +44,10 @@ export default class App extends React.Component
                 <div>
                     <StopWatch time={0} ref={ref => this.stopWatchComponent = ref }/>
                     <button onClick={this.toggleStopWatch.bind(this)} className="stop-watch-toggle">{(this.state.isCounting===true)?"STOP":"START"}</button>
+                    <button onClick={this.saveUserRecord.bind(this)} className="stop-watch-toggle">Save Record</button>
                 </div>
                 
                 <div className="footer">
-                    <button className="save-record-button">Save Record</button>
                     <div className="footer-back-ground">Icons made by Yannick from www.flaticon.com is licensed by CC 3.0 BY</div>       
                 </div>
             </div>
