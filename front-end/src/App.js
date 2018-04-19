@@ -17,7 +17,7 @@ export default class App extends React.Component
                 
                 <div className="footer">
                     <button className="save-record-button">Save Record</button>
-                    <div>Icons made by Yannick from www.flaticon.com is licensed by CC 3.0 BY</div>       
+                    <div className="footer-back-ground">Icons made by Yannick from www.flaticon.com is licensed by CC 3.0 BY</div>       
                 </div>
             </div>
         );

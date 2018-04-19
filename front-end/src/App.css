@@ -11,6 +11,7 @@
     --wight-color: #ffffff;
 
     --main-buttons-height:30px;
+    --main-buttons-height-X2:60px;
 }
 
 *{
@@ -54,7 +55,6 @@ h1 {
 }
 
 .footer {
-    background-color: var(--footer-color);
     position: absolute;
     color:var(--wight-color);
     left: 0;
@@ -65,6 +65,10 @@ h1 {
     text-align: center;
     font-size: 10px; 
     line-height: 30px;
+}
+
+.footer-back-ground{
+    background-color: var(--footer-color);
 }
 
 .main-button{
@@ -122,7 +126,7 @@ button:active  {
     }
     @media only screen and (min-height: 768px) {
         [class*="stop-watch"] {
-            margin-top:100px;
+            margin-top:150px;
         }
     }
 
@@ -137,6 +141,21 @@ button:active  {
 .stop-watch-toggle:hover{
     background-color:var(--main-bg-color);
 }
+
+.save-record-button{
+    width:100%;
+    height: var(--main-buttons-height-X2);
+}
+
+
+
+
+
+
+
+
+
+
 
 
 p { color: #adb7bd; font-family: 'Lucida Sans', Arial, sans-serif; font-size: 16px; line-height: 26px; text-indent: 30px; margin: 0; }
