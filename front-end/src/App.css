@@ -8,6 +8,16 @@
     --orange-color-burnt: #fe261f;
     --gray-bg-color: #444444;
     --wight-color: #ffffff;
+
+    --main-buttons-height:30px;
+    --main-buttons-height-X2:60px;
+    --main-buttons-height-X3:90px;
+}
+
+*{
+    -moz-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    -webkit-transition: all .2s ease;
 }
 
 body{
@@ -15,6 +25,13 @@ body{
     padding:0;
     background-color: var(--main-bg-color);
     font-family: 'Julius Sans One', sans-serif;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
 }
 
 h1 { 
@@ -34,10 +51,10 @@ h1 {
     border-bottom-width:2px;
     border-bottom-color: var(--orange-color);
     border-bottom-style: solid;
+    margin:0;
 }
 
 .footer {
-    background-color: var(--footer-color);
     position: absolute;
     color:var(--wight-color);
     left: 0;
@@ -50,16 +67,16 @@ h1 {
     line-height: 30px;
 }
 
+.footer-back-ground{
+    background-color: var(--footer-color);
+}
+
 .main-button{
     width:50%;
-    height:50px;
+    height:var(--main-buttons-height);
 }
 
 button {
-    -moz-transition: all .2s ease-in;
-    -o-transition: all .2s ease-in;
-    -webkit-transition: all .2s ease-in;
-
     background-color: var(--gray-bg-color); 
     border: none;
     color: white;
@@ -71,12 +88,14 @@ button {
     border-color: var(--main-bg-color);
     border-style: solid;
 
+    border-top-style:none;
+    border-bottom-style:none;
+    
+
+    font-family: 'Julius Sans One', sans-serif;
 }
 
 button:hover {
-    -moz-transition: all .2s ease-in;
-    -o-transition: all .2s ease-in;
-    -webkit-transition: all .2s ease-in;
     background: var(--orange-color-buttons); 
 }
 
@@ -87,17 +106,41 @@ button:active  {
     background: var(--orange-color-burnt); 
 }
 
+    @media only screen and (max-height: 768px) {
+        [class*="stop-watch"] {
+            margin-top:50px;
+        }
+    }
+    @media only screen and (min-height: 768px) {
+        [class*="stop-watch"] {
+            margin-top:150px;
+        }
+    }
 
-
-
-
-.stop-watch{
-    font-size:40px;
-    color:var(--wight-color);
+.stop-watch-toggle{
     width:100%;
-    background-color:#ff0000;
-    text-align:center;
+    height: var(--main-buttons-height);
+    background-color:var(--main-bg-color);
+    font-size:35px;
+    text-decoration: none;
 }
+
+.stop-watch-toggle:hover{
+    background-color:var(--main-bg-color);
+}
+
+.save-record-button{
+    width:100%;
+    height: var(--main-buttons-height-X3);
+}
+
+
+
+
+
+
+
+
 
 
 
