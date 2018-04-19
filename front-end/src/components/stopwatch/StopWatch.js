@@ -6,8 +6,8 @@ import './stopwatch.css';
 export default class StopWatch extends React.Component
 {
     static defaultProps = {
-        time:58*1000,
-        interval:10,
+        time:0,
+        interval:100,
         blinkColor:'#fe921f'
     }
 
@@ -30,14 +30,20 @@ export default class StopWatch extends React.Component
         /**0 only miliseconds, 1 seconds, 2 minutes, 3 hours, 4 days */
         this.level = 0 ;
 
-        this.separator = '\t:\t' ;
+        this.separator = ':' ;
 
         this.state = {
             time:this.props.time
         }
 
         this.splitTimeInStrings();
+
+        window.addEventListener("resize", this.ReRender.bind(this));
     }
+
+    componentDidMount() {
+        window.addEventListener('load', this.ReRender.bind(this));
+     }
 
     splitTimeInStrings()
     {
@@ -75,7 +81,7 @@ export default class StopWatch extends React.Component
         /**milisecond part */
         showMiliSecondPart()
         {
-            return '.'+this.numToString(Math.floor(this.mil/10));
+            return '.'+Math.floor(this.mil/100);
         }
 
         showSecondPart()
@@ -145,23 +151,42 @@ export default class StopWatch extends React.Component
             });
         }
 
+
+        ReRender()
+        {
+            this.setState({
+                rerender:!this.state.rerender
+            })
+        }
+
     render()
     {
         this.splitTimeInStrings();
 
-        const stopWatchPose = {} ;
+        const fadeCSS = 'sotp-watch-fade';
+        const fadeInCSS = 'stop-watch-fade-in';
+
+        let minStyle = (this.level>1)?fadeInCSS:fadeCSS;
+        let houreStyle = (this.level>2)?fadeInCSS:fadeCSS;
+        let dayStyle = (this.level>3)?fadeInCSS:fadeCSS;
+
+        let stopWatchPose = {};
         if(this.textBody!==undefined)
         {
             stopWatchPose.paddingRight = (this.mainStopWatchBody.offsetWidth-this.textBody.offsetWidth)/2+'px';
-            //console.log(this.textBody.offsetWidth+' vs '+this.mainStopWatchBody.offsetWidth);
+        }
+        else
+        {
+            //setTimeout(this.ReRender.bind(this),0);
+            stopWatchPose.opacity = -10 ;
         }
        
-        /*<div className="stop-watch"><b> <span style={houreStyle}>{this.state.hour}:</span><span>00</span><span className="milisecond-part">:00</span> </b></div>*/
+        console.log("minStyle : "+minStyle+' vs '+this.level)
         return(
             <div className="stop-watch" style={stopWatchPose} ref={ref => this.mainStopWatchBody = ref}><b ref={ref => this.textBody = ref}>
-                <span>{this.showDayPart()}</span><span>{this.showDaySeparator()}</span>
-                <span>{this.showHourePart()}</span><span>{this.showHoureSeparator()}</span>
-                <span>{this.showMinutesPart()}</span><span>{this.showMinutesSeparator()}</span>
+                <span className={dayStyle}>{this.showDayPart()+this.showDaySeparator()}</span>
+                <span className={houreStyle}>{this.showHourePart()+this.showHoureSeparator()}</span>
+                <span className={minStyle}>{this.showMinutesPart()+this.showMinutesSeparator()}</span>
                 <span>{this.showSecondPart()}</span>
                 <span className="milisecond-part">{this.showMiliSecondPart()}</span> </b>
             </div>

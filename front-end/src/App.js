@@ -36,7 +36,7 @@ export default class App extends React.Component
                 <div className="headersection"><h1>Stop Watch</h1></div>
                 <button className="main-button">Stop Watch</button><button className="main-button">History</button>
                 <div>
-                    <StopWatch ref={ref => this.stopWatchComponent = ref }/>
+                    <StopWatch time={0} ref={ref => this.stopWatchComponent = ref }/>
                     <button onClick={this.toggleStopWatch.bind(this)} className="stop-watch-toggle">{(this.state.isCounting===true)?"STOP":"START"}</button>
                 </div>
                 
