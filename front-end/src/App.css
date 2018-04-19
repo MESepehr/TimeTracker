@@ -7,6 +7,7 @@
     --orange-color-buttons: #fe661f;
     --orange-color-burnt: #fe261f;
     --gray-bg-color: #444444;
+    --wight-color: #ffffff;
 }
 
 body{
@@ -17,7 +18,7 @@ body{
 }
 
 h1 { 
-    color: #ffffff;
+    color: var(--wight-color);
     font-size: 30px; 
     font-weight: 5; 
     margin:0;
@@ -30,7 +31,7 @@ h1 {
     line-height: 60px;
     text-align: center;
 
-    border-bottom-width:1px;
+    border-bottom-width:2px;
     border-bottom-color: var(--orange-color);
     border-bottom-style: solid;
 }
@@ -38,7 +39,7 @@ h1 {
 .footer {
     background-color: var(--footer-color);
     position: absolute;
-    color:var(--orange-color);
+    color:var(--wight-color);
     left: 0;
     bottom: 0;
     height: 80;
