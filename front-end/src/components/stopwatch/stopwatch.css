@@ -1,18 +1,30 @@
-@import url('https://fonts.googleapis.com/css?family=Inconsolata')
+@import url('https://fonts.googleapis.com/css?family=Inconsolata');
 
-{
-    -moz-transition: all .2s ease;
-    -o-transition: all .2s ease;
-    -webkit-transition: all .2s ease;
-}
 
 .stop-watch{
     font-size:60px;
     color:#ddd;
-    width:100%;
-    text-align:center;
+    background-color:#f00;
+    text-align:right;
+    width:40px;
     
     font-family: 'Inconsolata', monospace;
+}
+
+.stop-watch-element{
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -webkit-transition: all 1s ease;
+
+    color:#ddd;
+}
+
+.stop-watch-element-glow{
+    -moz-transition: all 0s ease;
+    -o-transition: all 0s ease;
+    -webkit-transition: all 0s ease;
+
+    color:#fe921f;
 }
 
 .milisecond-part{

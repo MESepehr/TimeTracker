@@ -6,13 +6,15 @@ import './stopwatch.css';
 export default class StopWatch extends React.Component
 {
     static defaultProps = {
-        time:1000*60*60*48,
-        interval:10
+        time:58*1000,
+        interval:10,
+        blinkColor:'#fe921f'
     }
 
     static propTypes = {
         time:PropTypes.number,
-        interval:PropTypes.number
+        interval:PropTypes.number,
+        blinkColor:PropTypes.string
     }
 
     constructor(props)
@@ -33,6 +35,8 @@ export default class StopWatch extends React.Component
         this.state = {
             time:this.props.time
         }
+
+        this.splitTimeInStrings();
     }
 
     splitTimeInStrings()
@@ -143,44 +147,27 @@ export default class StopWatch extends React.Component
 
     render()
     {
+
+        let lastSec = this.sec ;
+        let lastMin = this.min ;
+        let lastHou = this.hour ;
+
         this.splitTimeInStrings();
 
-        const numberWidth = 100 ;
-        const dividerWidth = 20 ;
-        let width = (this.level+1)*numberWidth+this.level*dividerWidth ;
+        var colorFull = "stop-watch-element-glow";
+        var defaultColor = "stop-watch-element";
 
-        var styleArray = [] ;
-
-        var X = width/2;
-
-        for(var i = 0 ; i<=this.level ; i++)
-        {
-            console.log("X for number : "+X);
-            styleArray.push({
-                //position:'absolute',
-                //marginLeft: (X-=numberWidth)+'px'
-            });
-            
-            console.log("X for divider : "+X);
-            styleArray.push({
-                //position:'absolute',
-                //marginLeft: (X-=dividerWidth)+'px'
-            });
-        }
-
-        const stopWatchContainer = {
-            width:'100%',
-            height:'60px'
-        }
+        var houreStyle = (lastHou!==this.hour)?colorFull:defaultColor;
+        var minStyle = (lastMin!==this.min)?colorFull:defaultColor;
        
         /*<div className="stop-watch"><b> <span style={houreStyle}>{this.state.hour}:</span><span>00</span><span className="milisecond-part">:00</span> </b></div>*/
         return(
-            <div className="stop-watch" style={stopWatchContainer}><b>
-                <span style={styleArray[8]} className="day-part">{this.showDayPart()}</span><span style={styleArray[7]}>{this.showDaySeparator()}</span>
-                <span style={styleArray[6]}>{this.showHourePart()}</span><span style={styleArray[5]}>{this.showHoureSeparator()}</span>
-                <span style={styleArray[4]}>{this.showMinutesPart()}</span><span style={styleArray[3]}>{this.showMinutesSeparator()}</span>
-                <span style={styleArray[2]}>{this.showSecondPart()}</span>
-                <span style={styleArray[0]} className="milisecond-part">{this.showMiliSecondPart()}</span> </b>
+            <div className="stop-watch"><b>
+                <span>{this.showDayPart()}</span><span>{this.showDaySeparator()}</span>
+                <span className={houreStyle}>{this.showHourePart()}</span><span>{this.showHoureSeparator()}</span>
+                <span className={minStyle}>{this.showMinutesPart()}</span><span>{this.showMinutesSeparator()}</span>
+                <span>{this.showSecondPart()}</span>
+                <span className="milisecond-part">{this.showMiliSecondPart()}</span> </b>
             </div>
         );
     }
