@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 
 
-
+                     <div className="stop-watch"><b> <span>00:</span><span>00:</span><span>00</span> </b></div>
 export default class App extends React.Component
 {
     render()

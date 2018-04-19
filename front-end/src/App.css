@@ -89,6 +89,19 @@ button:active  {
 
 
 
+
+
+.stop-watch{
+    font-size:40px;
+    color:var(--wight-color);
+    width:100%;
+    background-color:#ff0000;
+    text-align:center;
+}
+
+
+
+
 p { color: #adb7bd; font-family: 'Lucida Sans', Arial, sans-serif; font-size: 16px; line-height: 26px; text-indent: 30px; margin: 0; }
 
 a { color: #fe921f; text-decoration: underline; }
