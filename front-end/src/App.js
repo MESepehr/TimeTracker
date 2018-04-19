@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 
 
-                     <div className="stop-watch"><b> <span>00:</span><span>00:</span><span>00</span> </b></div>
 export default class App extends React.Component
 {
     render()
@@ -11,7 +10,7 @@ export default class App extends React.Component
             <div className="non">
                 <div className="headersection"><h1>Stop Watch</h1></div>
                 <div>
-
+                    <div className="stop-watch"><b> <span>00:</span><span>00</span><span className="milisecond-part">:00</span> </b></div>
                 </div>
                 
                 <div className="footer">

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Julius+Sans+One');
+@import url('https://fonts.googleapis.com/css?family=Alfa+Slab+One');
 
 :root {
     --main-bg-color: #222222;    
@@ -87,17 +88,29 @@ button:active  {
     background: var(--orange-color-burnt); 
 }
 
-
-
-
-
 .stop-watch{
-    font-size:40px;
-    color:var(--wight-color);
+    font-size:60px;
+    color:#ddd;
     width:100%;
-    background-color:#ff0000;
     text-align:center;
+    font-family: 'Alfa Slab One', cursive;
 }
+
+.milisecond-part{
+    font-size:20px;
+}
+
+    @media only screen and (max-height: 768px) {
+        [class*="stop-watch"] {
+            margin-top:100px;
+        }
+    }
+    @media only screen and (min-height: 768px) {
+        [class*="stop-watch"] {
+            margin-top:200px;
+        }
+    }
+
 
 
 
