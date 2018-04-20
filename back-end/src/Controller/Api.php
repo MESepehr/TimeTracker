@@ -28,7 +28,7 @@ class Api extends Controller
             $entityManager->persist($newDuration);
             $entityManager->flush();
 
-            return new Response("1");
+            return new Response($newDuration->getId());
         }
         catch(Exception $e)
         {
