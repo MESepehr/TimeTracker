@@ -35,4 +35,21 @@ class Api extends Controller
             return new Response("0");
         }
     }
+
+    /**
+     * @Route("/api/getLastOpenedDuration")
+     * @Method({"GET"})
+     */
+    public function getLastOpenedDuration()
+    {
+        $trackedTime = $this->getDoctrine()
+            ->getRepository(Trackedtime::class)
+            ->findBy(['submitdone' => '0']);
+
+        if (!$trackedTime) {
+            return new Response('null');
+        }
+
+        return new Response(json_encode($trackedTime[0]));
+    }
 }

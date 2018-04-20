@@ -19,35 +19,35 @@ class Trackedtime
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    public $id;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="description", type="text", length=65535, nullable=true)
      */
-    private $description;
+    public $description;
 
     /**
      * @var int
      *
      * @ORM\Column(name="duration", type="bigint", nullable=false)
      */
-    private $duration = '0';
+    public $duration = '0';
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="submitdate", type="date", nullable=true)
      */
-    private $submitdate;
+    public $submitdate;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="submitdone", type="boolean", nullable=false)
      */
-    private $submitdone = '0';
+    public $submitdone = '0';
 
     public function getId(): ?int
     {
