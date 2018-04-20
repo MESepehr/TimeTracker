@@ -1,11 +1,22 @@
 import React from 'react';
 import './App.css';
+import PropTypes from 'prop-types';
 import StopWatch from './components/stopwatch/StopWatch';
 import axios from 'axios';
 
 
 export default class App extends React.Component
 {
+    static defaultProps = 
+    {
+        domain:null
+    }
+
+    static propTypes = 
+    {
+        domain:PropTypes.string.isRequired
+    }
+
     constructor(props)
     {
         super(props);
@@ -17,18 +28,10 @@ export default class App extends React.Component
 
     componentDidMount()
     {
-        alert("Call teh web service");
-        //axios.get('https://jsonplaceholder.typicode.com/users')
-        axios.get('http://127.0.0.1:8000/api/getLastOpenedDuration')
+        axios.get(this.props.domain+'/api/getLastOpenedDuration')
         .then(this.lastSavedTimeRetuned.bind(this)).catch(
             this.connectionError
         );
-        /*axios.get('http://127.0.0.1:8000/api/getLastOpenedDuration')
-        .then(
-            this.lastSavedTimeRetuned.bind(this)
-        ).catch(
-            this.connectionError
-        );*/
     }
 
     /**{"id":1,"description":null,"duration":"2000","submitdate":null,"submitdone":false} */
