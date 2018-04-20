@@ -9,12 +9,14 @@ export default class App extends React.Component
 {
     static defaultProps = 
     {
-        domain:null
+        domain:null,
+        updateInterval:5000
     }
 
     static propTypes = 
     {
-        domain:PropTypes.string.isRequired
+        domain:PropTypes.string.isRequired,
+        updateInterval:PropTypes.number
     }
 
     constructor(props)
