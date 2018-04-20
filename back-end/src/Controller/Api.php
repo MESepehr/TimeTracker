@@ -12,9 +12,10 @@ use App\Entity\Trackedtime;
 
 class Api extends Controller
 {
+
     /**
      * @Route("/api/insertNewDuration")
-     * @Method({"POST"})
+     * @Method({"GET"})
      */
     public function insertNewDuration(Request $request) {
         $response = new Response();
@@ -22,11 +23,9 @@ class Api extends Controller
         $response->headers->set('Access-Control-Allow-Origin', '*');
 
         try
-        {
-            $parsedRequest = json_decode($request->getContent());
-            
+        {   
             $newDuration = new Trackedtime();
-            $newDuration->setDuration($parsedRequest->duration) ;
+            $newDuration->setDuration($request->query->get('duration')) ;
             
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($newDuration);
