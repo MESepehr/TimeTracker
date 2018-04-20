@@ -17,6 +17,10 @@ class Api extends Controller
      * @Method({"POST"})
      */
     public function insertNewDuration(Request $request) {
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+
         try
         {
             $parsedRequest = json_decode($request->getContent());
@@ -28,32 +32,37 @@ class Api extends Controller
             $entityManager->persist($newDuration);
             $entityManager->flush();
 
-            return new Response($newDuration->getId());
+            $response->setContent($newDuration->getId());
         }
         catch(Exception $e)
         {
-            return new Response("0");
+            $response->setContent("0");
         }
+        return $response;
     }
 
+    private static $headers ;
     /**
      * @Route("/api/getLastOpenedDuration")
      * @Method({"GET"})
      */
     public function getLastOpenedDuration()
     {
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+
         $trackedTime = $this->getDoctrine()
             ->getRepository(Trackedtime::class)
             ->findBy(['submitdone' => '0']);
 
         if (!$trackedTime) {
-            $response = new Response('null');
-            $response->headers->set('Content-Type', 'application/json');
+            $response->setContent('null');
             return $response;
         }
-
-        $response = new Response(json_encode($trackedTime[0]));
-        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent(json_encode($trackedTime[0]));
         return $response;
     }
+
+
 }
