@@ -41,7 +41,16 @@ export default class App extends React.Component
     {
         if(data.data===null)
         {
-            alert("Hello!")
+            //alert("Try to generate new record to the server");
+            axios.get(this.props.domain+'/api/insertNewDuration?duration=0')
+            .then(res => {
+                            //alert(res.data);
+                            if(res.data===0)
+                            {
+                               alert("Somthing wrong with the server...") 
+                            };
+                            this.currentTimerId = res.data;
+                        } ).catch(this.connectionError);
         }
         else
         {
