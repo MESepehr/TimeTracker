@@ -41,6 +41,11 @@ export default class StopWatch extends React.Component
         window.addEventListener("resize", this.ReRender.bind(this));
     }
 
+    getCurrentTime()
+    {
+        return Number(this.state.time) ;
+    }
+
     startFrom(newTime)
     {
         this.setState({time : newTime}) ;
@@ -153,8 +158,9 @@ export default class StopWatch extends React.Component
         incraeseTime()
         {
             this.setState({
-                time:this.state.time+this.props.interval
+                time:this.state.time+Number(this.props.interval)
             });
+            console.log("this.state.time : "+this.state.time);
         }
 
 
