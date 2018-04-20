@@ -42,5 +42,46 @@ class Trackedtime
      */
     private $submitdate;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(int $duration): self
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    public function getSubmitdate(): ?\DateTimeInterface
+    {
+        return $this->submitdate;
+    }
+
+    public function setSubmitdate(?\DateTimeInterface $submitdate): self
+    {
+        $this->submitdate = $submitdate;
+
+        return $this;
+    }
+
 
 }
