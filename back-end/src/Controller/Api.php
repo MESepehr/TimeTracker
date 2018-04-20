@@ -40,6 +40,42 @@ class Api extends Controller
         return $response;
     }
 
+    /**
+     * @Route("/api/updateDuration")
+     * @Method({"GET"})
+     */
+    public function updateDuration(Request $request) {
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+
+        try
+        {   
+            $duration = $request->query->get('duration') ;
+            $trackedDurationId = $request->query->get('id') ;
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $trackedDuration = $entityManager->getRepository(Trackedtime::class)->find($trackedDurationId);
+        
+            if (!$trackedDuration) {
+                //The required id is not founded
+                $response->setContent("0");
+                return $response;
+            }
+            
+            $trackedDuration->setDuration($duration);
+            $entityManager->flush();
+            
+            $response->setContent($trackedDuration->getId()); 
+            return $response;
+        }
+        catch(Exception $e)
+        {
+            $response->setContent("0");
+        }
+        return $response;
+    }
+
     private static $headers ;
     /**
      * @Route("/api/getLastOpenedDuration")
