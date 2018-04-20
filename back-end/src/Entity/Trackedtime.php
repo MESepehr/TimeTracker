@@ -42,6 +42,13 @@ class Trackedtime
      */
     private $submitdate;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="submitdone", type="boolean", nullable=false)
+     */
+    private $submitdone = '0';
+
     public function getId(): ?int
     {
         return $this->id;
@@ -79,6 +86,18 @@ class Trackedtime
     public function setSubmitdate(?\DateTimeInterface $submitdate): self
     {
         $this->submitdate = $submitdate;
+
+        return $this;
+    }
+
+    public function getSubmitdone(): ?bool
+    {
+        return $this->submitdone;
+    }
+
+    public function setSubmitdone(bool $submitdone): self
+    {
+        $this->submitdone = $submitdone;
 
         return $this;
     }
