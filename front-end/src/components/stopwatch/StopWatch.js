@@ -41,6 +41,12 @@ export default class StopWatch extends React.Component
         window.addEventListener("resize", this.ReRender.bind(this));
     }
 
+    startFrom(newTime)
+    {
+        this.setState({time : newTime}) ;
+
+    }
+
     componentDidMount() {
         window.addEventListener('load', this.ReRender.bind(this));
      }

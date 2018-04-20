@@ -23,6 +23,8 @@ export default class App extends React.Component
         this.state = {
             isCounting:false
         }
+        /**This is the current timer id to help you save the user time */
+        this.currentTimerId = 0 ;
         this.stopWatchComponent = null ;
     }
 
@@ -37,7 +39,15 @@ export default class App extends React.Component
     /**{"id":1,"description":null,"duration":"2000","submitdate":null,"submitdone":false} */
     lastSavedTimeRetuned(data)
     {
-        alert("Data backed : "+data)
+        if(data.data===null)
+        {
+            alert("Hello!")
+        }
+        else
+        {
+            this.stopWatchComponent.startFrom(data.data.duration);
+            this.currentTimerId = data.data.id ;
+        }
     }
 
     /**Show the connectino error popUp */
