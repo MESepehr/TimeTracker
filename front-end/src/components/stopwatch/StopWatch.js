@@ -48,7 +48,7 @@ export default class StopWatch extends React.Component
 
     startFrom(newTime)
     {
-        this.setState({time : newTime}) ;
+        this.setState({time : Number(newTime)}) ;
 
     }
 
@@ -157,10 +157,11 @@ export default class StopWatch extends React.Component
 
         incraeseTime()
         {
+            //console.log("typeof : "+typeof(this.state.time))
             this.setState({
-                time:this.state.time+Number(this.props.interval)
+                time:Number(this.state.time)+Number(this.props.interval)
             });
-            console.log("this.state.time : "+this.state.time);
+            //console.log("this.state.time : "+this.state.time);
         }
 
 
