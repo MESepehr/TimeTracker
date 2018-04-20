@@ -10,7 +10,7 @@ export default class App extends React.Component
     static defaultProps = 
     {
         domain:null,
-        updateInterval:5000
+        updateInterval:2100
     }
 
     static propTypes = 
@@ -28,6 +28,7 @@ export default class App extends React.Component
         /**This is the current timer id to help you save the user time */
         this.currentTimerId = 0 ;
         this.stopWatchComponent = null ;
+        this.updatorTimeoutId = 0 ;
     }
 
     componentDidMount()
@@ -49,9 +50,14 @@ export default class App extends React.Component
                             //alert(res.data);
                             if(res.data===0)
                             {
-                               alert("Somthing wrong with the server...") 
+                               alert("Somthing wrong with the server...") ;
+                               return;
                             };
                             this.currentTimerId = res.data;
+                            if(this.state.isCounting)
+                            {
+                                this.startUpdatingServer();
+                            }
                         } ).catch(this.connectionError);
         }
         else
@@ -87,42 +93,53 @@ export default class App extends React.Component
     {
         if(this.updatorTimeoutId!==0 || this.currentTimerId===0)
         {
-            console.log("The server updator is in progress")
+            console.log("The server updator is in progress : "+this.updatorTimeoutId+" vs "+this.currentTimerId);
             return ;
         }
-
-        let sendCurrentDuration = function()
+        console.log("Start updating...");
+        this.updatorTimeoutId = setTimeout(this.sendCurrentDuration.bind(this),this.props.updateInterval);
+    }
+        sendCurrentDuration()
         {
-            axios.get(this.props.domain+"api/updateDuration?duration="+this.stopWatchComponent.getCurrentTime()+"&id="+this.currentTimerId)
-            .then(durationUpdateRespond.bind(this))
-            .catch(connectinError.bind(this));
+            console.log("Update server : "+this.props.domain+"api/updateDuration?duration="+this.stopWatchComponent.getCurrentTime()+"&id="+this.currentTimerId);
+            axios.get(this.props.domain+"/api/updateDuration?duration="+this.stopWatchComponent.getCurrentTime()+"&id="+this.currentTimerId)
+            .then(this.durationUpdateRespond.bind(this))
+            .catch(this.connectinError.bind(this));
+        }
+        
+        connectinError(res)
+        {
+            console.log(res);
+            if(this.updatorTimeoutId !== 0)//This means timeout called this function befor
+            {
+                this.updatorTimeoutId = 0 ;
+                this.startUpdatingServer();
+            }
         }
 
-            let connectinError = function(res)
+        durationUpdateRespond(res)
+        {
+            if(res.data===0)
             {
-                console.log(res);
+                console.log("...Connection problem...")
+            }
+            else
+            {
+                console.log("Server updated");
+            }
+
+            if(this.updatorTimeoutId !== 0)//This means timeout called this function befor
+            {
                 this.updatorTimeoutId = 0 ;
                 this.startUpdatingServer();
             }
-
-            let durationUpdateRespond = function(res)
-            {
-                this.updatorTimeoutId = 0 ;
-                if(res.data===0)
-                {
-                    console.log("...Connection problem...")
-                }
-
-                this.startUpdatingServer();
-            }
-        
-        this.updatorTimeoutId = setTimeout(sendCurrentDuration,this.props.updateInterval);
-    }
+        }
     
     stopUpdatingServer()
     {
         clearTimeout(this.updatorTimeoutId);
         this.updatorTimeoutId = 0 ;
+        this.sendCurrentDuration();
     }
 
    saveUserRecord()
