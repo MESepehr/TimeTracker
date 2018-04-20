@@ -47,9 +47,13 @@ class Api extends Controller
             ->findBy(['submitdone' => '0']);
 
         if (!$trackedTime) {
-            return new Response('null');
+            $response = new Response('null');
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
         }
 
-        return new Response(json_encode($trackedTime[0]));
+        $response = new Response(json_encode($trackedTime[0]));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 }
