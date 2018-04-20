@@ -13,26 +13,26 @@ use App\Entity\Trackedtime;
 class Api extends Controller
 {
     /**
-     * @Route("/api/saveOrUpdateLastDuration")
+     * @Route("/api/insertNewDuration")
      * @Method({"POST"})
      */
-    public function index(Request $request) {
+    public function insertNewDuration(Request $request) {
         try
         {
             $parsedRequest = json_decode($request->getContent());
-
-            $entityManager = $this->getDoctrine()->getManager();
+            
             $newDuration = new Trackedtime();
             $newDuration->setDuration($parsedRequest->duration) ;
-
+            
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($newDuration);
             $entityManager->flush();
 
-            return new Response("Hi ".json_encode($parsedRequest->duration));
+            return new Response("1");
         }
         catch(Exception $e)
         {
-            return new Response("Error : {$e->getMessage()}");
+            return new Response("0");
         }
     }
 }
