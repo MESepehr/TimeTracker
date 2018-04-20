@@ -19,15 +19,7 @@ export default class App extends React.Component
     {
         alert("Call teh web service");
         //axios.get('https://jsonplaceholder.typicode.com/users')
-        var path=require('path');
-        var lib=path.join(path.dirname(require.resolve('axios')),'lib/adapters/http');
-        var http=require(lib);
-        axios.get('http://127.0.0.1:8000/api/getLastOpenedDuration',{
-            adapter: http,
-            headers: {
-                Authorization: "Basic YWRtaW46bHVveGlueGlhbjkx"
-            }
-        })
+        axios.get('http://127.0.0.1:8000/api/getLastOpenedDuration')
         .then(this.lastSavedTimeRetuned.bind(this)).catch(
             this.connectionError
         );
