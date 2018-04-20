@@ -73,17 +73,63 @@ export default class App extends React.Component
         if(this.state.isCounting)
         {
             this.stopWatchComponent.stop();
+            this.stopUpdatingServer();
         }
         else
         {
             this.stopWatchComponent.start();
+            this.startUpdatingServer();
         } 
    }
+
+    
+    startUpdatingServer()
+    {
+        if(this.updatorTimeoutId!==0 || this.currentTimerId===0)
+        {
+            console.log("The server updator is in progress")
+            return ;
+        }
+
+        let sendCurrentDuration = function()
+        {
+            axios.get(this.props.domain+"api/updateDuration?duration="+this.stopWatchComponent.getCurrentTime()+"&id="+this.currentTimerId)
+            .then(durationUpdateRespond.bind(this))
+            .catch(connectinError.bind(this));
+        }
+
+            let connectinError = function(res)
+            {
+                console.log(res);
+                this.updatorTimeoutId = 0 ;
+                this.startUpdatingServer();
+            }
+
+            let durationUpdateRespond = function(res)
+            {
+                this.updatorTimeoutId = 0 ;
+                if(res.data===0)
+                {
+                    console.log("...Connection problem...")
+                }
+
+                this.startUpdatingServer();
+            }
+        
+        this.updatorTimeoutId = setTimeout(sendCurrentDuration,this.props.updateInterval);
+    }
+    
+    stopUpdatingServer()
+    {
+        clearTimeout(this.updatorTimeoutId);
+        this.updatorTimeoutId = 0 ;
+    }
 
    saveUserRecord()
    {
         this.setState({isCounting:false});
         this.stopWatchComponent.stop();
+        this.stopUpdatingServer();
    }
 
 
