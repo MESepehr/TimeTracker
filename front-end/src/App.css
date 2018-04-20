@@ -103,7 +103,11 @@ button:active  {
     -moz-transition: all .02s ease-in;
     -o-transition: all .02s ease-in;
     -webkit-transition: all .02s ease-in;
-    background: var(--orange-color-burnt); 
+    background: var(--orange-color-burnt);
+}
+
+button:focus{
+    outline:0;
 }
 
     @media only screen and (max-height: 600px) {
