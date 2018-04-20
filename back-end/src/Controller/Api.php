@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use \Datetime;
 
 use App\Entity\Trackedtime;
 
@@ -51,19 +52,38 @@ class Api extends Controller
 
         try
         {   
-            $duration = $request->query->get('duration') ;
-            $trackedDurationId = $request->query->get('id') ;
-
             $entityManager = $this->getDoctrine()->getManager();
+
+            $trackedDurationId = $request->query->get('id') ;
+            $duration = $request->query->get('duration') ;
+            $description = $request->query->get('description') ;
+            $submitdone = $request->query->get('submitdone') ;
+
+            $submitdate = null ;
+
             $trackedDuration = $entityManager->getRepository(Trackedtime::class)->find($trackedDurationId);
-        
             if (!$trackedDuration) {
                 //The required id is not founded
                 $response->setContent("0");
                 return $response;
             }
-            
+
             $trackedDuration->setDuration($duration);
+            $trackedDuration->setDescription($description);
+            
+            if($submitdone != "" && $submitdone != "0")
+            {
+                $submitdate = new DateTime();
+                $trackedDuration->setSubmitdate($submitdate);
+                $trackedDuration->setSubmitdone(1);
+            }
+            else{
+                $trackedDuration->setSubmitdate(null);
+                $trackedDuration->setSubmitdone(0);
+            }
+
+        
+            
             $entityManager->flush();
             
             $response->setContent($trackedDuration->getId()); 
