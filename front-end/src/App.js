@@ -51,20 +51,7 @@ export default class App extends React.Component
         if(data.data===null)
         {
             //alert("Try to generate new record to the server");
-            axios.get(this.props.domain+'/api/insertNewDuration?duration=0')
-            .then(res => {
-                            //alert(res.data);
-                            if(res.data===0)
-                            {
-                               alert("Somthing wrong with the server...") ;
-                               return;
-                            };
-                            this.currentTimerId = res.data;
-                            if(this.state.isCounting)
-                            {
-                                this.startUpdatingServer();
-                            }
-                        } ).catch(this.connectionError);
+           this.startNewRecord();
         }
         else
         {
@@ -95,6 +82,23 @@ export default class App extends React.Component
         } 
    }
 
+   startNewRecord()
+   {
+        axios.get(this.props.domain+'/api/insertNewDuration?duration=0')
+        .then(res => {
+                        //alert(res.data);
+                        if(res.data===0)
+                        {
+                        alert("Somthing wrong with the server...") ;
+                        return;
+                        };
+                        this.currentTimerId = res.data;
+                        if(this.state.isCounting)
+                        {
+                            this.startUpdatingServer();
+                        }
+                    } ).catch(this.connectionError);
+   }
     
     startUpdatingServer()
     {
@@ -125,14 +129,16 @@ export default class App extends React.Component
             }
 
             let submitPart = '' ;
-            if(submitdone===undefined)
+            let onDoneFunction = this.durationUpdateRespond.bind(this);
+            if(submitdone===true)
             {
                 submitPart = '&submitdone=1';
+                onDoneFunction = this.startNewRecord.bind(this);
             }
             console.log("Update server : "+this.props.domain+"api/updateDuration?duration="+currentTime+"&id="+this.currentTimerId+descriptionPart+submitPart);
             axios.get(this.props.domain+"/api/updateDuration?duration="+currentTime+"&id="+this.currentTimerId+descriptionPart+submitPart)
-            .then(this.durationUpdateRespond.bind(this))
-            .catch(this.connectinError.bind);
+            .then(onDoneFunction)
+            .catch(this.connectinError);
         }
         
         connectinError(res)
@@ -311,7 +317,8 @@ export default class App extends React.Component
                 }
                 else
                 {
-                    /** {
+                    /** 
+                     * data base items : {
                         "id": 15,
                         "description": "Helo",
                         "duration": "720000",
