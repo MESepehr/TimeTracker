@@ -22,11 +22,11 @@ class Trackedtime
     public $id;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="description", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="description", type="string", length=250, nullable=false)
      */
-    public $description;
+    public $description = '';
 
     /**
      * @var int
