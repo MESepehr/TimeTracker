@@ -99,7 +99,6 @@ class Api extends Controller
         return $response;
     }
 
-    private static $headers ;
     /**
      * @Route("/api/getLastOpenedDuration")
      * @Method({"GET"})
@@ -119,6 +118,29 @@ class Api extends Controller
             return $response;
         }
         $response->setContent(json_encode($trackedTime[0]));
+        return $response;
+    }
+
+
+    /**
+     * @Route("/api/getLastDurations")
+     * @Method({"GET"})
+     */
+    public function getLastDurations()
+    {
+        $response = new Response();
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+
+        $trackedTime = $this->getDoctrine()
+            ->getRepository(Trackedtime::class)
+            ->findBy(['submitdone' => '1']);
+
+        if (!$trackedTime) {
+            $response->setContent('[]');
+            return $response;
+        }
+        $response->setContent(json_encode($trackedTime));
         return $response;
     }
 
