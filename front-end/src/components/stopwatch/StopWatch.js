@@ -190,7 +190,7 @@ export default class StopWatch extends React.Component
         }
         else
         {
-            //setTimeout(this.ReRender.bind(this),0);
+            setTimeout(this.ReRender.bind(this),0);
             stopWatchPose.opacity = -10 ;
         }
        

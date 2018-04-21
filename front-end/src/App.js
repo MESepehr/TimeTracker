@@ -23,12 +23,14 @@ export default class App extends React.Component
     {
         super(props);
         this.state = {
-            isCounting:false
+            isCounting:false,
+            mode:0//0: stop watch, 1: input text to save
         }
         /**This is the current timer id to help you save the user time */
         this.currentTimerId = 0 ;
         this.stopWatchComponent = null ;
         this.updatorTimeoutId = 0 ;
+        this.lastStopWatchTime = 0 ;
     }
 
     componentDidMount()
@@ -147,22 +149,56 @@ export default class App extends React.Component
         this.setState({isCounting:false});
         this.stopWatchComponent.stop();
         this.stopUpdatingServer();
+        this.lastStopWatchTime = this.stopWatchComponent.getCurrentTime();
+
+        this.setState({
+            mode:1
+        });
+   }
+
+   openStopWatch()
+   {
+        this.setState({
+            mode:0
+        })
    }
 
 
 
     render()
     {
+
+        let stopWatch =  <div>
+                            <StopWatch time={this.lastStopWatchTime} ref={ref => this.stopWatchComponent = ref }/>
+                            <button onClick={this.toggleStopWatch.bind(this)} className="stop-watch-toggle">{(this.state.isCounting===true)?"STOP":"START"}</button>
+                            <button onClick={this.saveUserRecord.bind(this)} className="stop-watch-toggle">Save / Reset</button>
+                        </div>;
+
+        let inputText = <div>
+            <input type="text"/>
+            <button onClick={this.openStopWatch.bind(this)} className="stop-watch-toggle">Back</button>
+        </div>
+
+        let bodyPart ;
+
+        switch(this.state.mode)
+        {
+            case 1:
+                bodyPart = inputText ;
+            break;
+            case 0:
+            default:
+                bodyPart = stopWatch;
+            break;
+        }
+
         return(
             <div className="non">
                 <div className="headersection"><h1>Stop Watch</h1></div>
                 <button className="main-button">Stop Watch</button><button className="main-button">History</button>
-                <div>
-                    <StopWatch time={0} ref={ref => this.stopWatchComponent = ref }/>
-                    <button onClick={this.toggleStopWatch.bind(this)} className="stop-watch-toggle">{(this.state.isCounting===true)?"STOP":"START"}</button>
-                    <button onClick={this.saveUserRecord.bind(this)} className="stop-watch-toggle">Save / Reset</button>
-                </div>
-                
+               
+                {bodyPart}
+
                 <div className="footer">
                     <div className="footer-back-ground">Icons made by Yannick from www.flaticon.com is licensed by CC 3.0 BY</div>       
                 </div>
