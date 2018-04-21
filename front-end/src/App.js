@@ -180,7 +180,9 @@ export default class App extends React.Component
 
    resetStopWatch()
    {
+        this.lastDescription = '' ;
         this.lastStopWatchTime = 0 ;
+        this.sendCurrentDuration(this.lastDescription,this.lastStopWatchTime);
         this.openStopWatch();
         setTimeout(this.sendCurrentDuration.bind(this),0);
    }
@@ -191,6 +193,7 @@ export default class App extends React.Component
         {
             this.lastStopWatchTime = this.state.lastStopWatchTime ;
         }
+        this.lastDescription = this.state.lastDescription ;
         this.sendCurrentDuration(this.state.lastDescription,this.lastStopWatchTime);
         this.openStopWatch();
     }
