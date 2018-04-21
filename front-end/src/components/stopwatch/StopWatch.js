@@ -8,13 +8,15 @@ export default class StopWatch extends React.Component
     static defaultProps = {
         time:0,
         interval:100,
-        blinkColor:'#fe921f'
+        blinkColor:'#fe921f',
+        onUnMount:null
     }
 
     static propTypes = {
         time:PropTypes.number,
         interval:PropTypes.number,
-        blinkColor:PropTypes.string
+        blinkColor:PropTypes.string,
+        onUnMount:PropTypes.func
     }
 
     constructor(props)
@@ -50,6 +52,15 @@ export default class StopWatch extends React.Component
     {
         this.setState({time : Number(newTime)}) ;
 
+    }
+
+    componentWillUnmount()
+    {
+        if(this.props.onUnMount!==undefined)
+        {
+            this.props.onUnMount();
+        }
+        this.stop();
     }
 
     componentDidMount() {

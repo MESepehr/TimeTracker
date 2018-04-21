@@ -24,6 +24,7 @@ export default class App extends React.Component
         super(props);
         this.state = {
             isCounting:false,
+            historyList:null,//This is the list of saved items
             mode:0//0: stop watch, 1: input text to save, 2: submited list
         }
         /**This is the current timer id to help you save the user time */
@@ -108,17 +109,23 @@ export default class App extends React.Component
         sendCurrentDuration(newDescription,currentTime,submitdone)
         {
             let descriptionPart = '';
-            if(newDescription!==null)
+            if(newDescription!==undefined)
             {
                 descriptionPart = '&description='+newDescription ;
             }
-            if(currentTime===null)
+            if(currentTime===undefined)
             {
-                currentTime = this.stopWatchComponent.getCurrentTime();
+                if(this.stopWatchComponent!==null)
+                {
+                    currentTime = this.stopWatchComponent.getCurrentTime();
+                }
+                else{
+                    currentTime = this.state.lastStopWatchTime ;
+                }
             }
 
             let submitPart = '' ;
-            if(submitdone===true)
+            if(submitdone===undefined)
             {
                 submitPart = '&submitdone=1';
             }
@@ -158,19 +165,25 @@ export default class App extends React.Component
     
     stopUpdatingServer()
     {
-        clearTimeout(this.updatorTimeoutId);
-        this.updatorTimeoutId = 0 ;
-        this.sendCurrentDuration();
+        if(this.updatorTimeoutId!==0)
+        {
+            clearTimeout(this.updatorTimeoutId);
+            this.updatorTimeoutId = 0 ;
+            this.sendCurrentDuration();
+        }
     }
 
    saveUserRecord()
    {
-        this.setState({isCounting:false});
-        this.stopWatchComponent.stop();
-        this.stopUpdatingServer();
-        this.lastStopWatchTime = this.stopWatchComponent.getCurrentTime();
+        if(this.stopWatchComponent!==null)
+        {
+            this.stopWatchComponent.stop();
+            this.stopUpdatingServer();
+            this.lastStopWatchTime = this.stopWatchComponent.getCurrentTime();
+        }
 
         this.setState({
+            isCounting:false,
             lastStopWatchTime:this.lastStopWatchTime,
             lastDescription:this.lastDescription,
             mode:1
@@ -184,11 +197,27 @@ export default class App extends React.Component
         })
    }
 
-   openSubmitListForm()
+   openHistoryList()
    {
+        if(this.stopWatchComponent!==null)
+        {
+            this.stopWatchComponent.stop();
+            this.lastStopWatchTime = this.stopWatchComponent.getCurrentTime();
+        }
+        
+        this.stopUpdatingServer();
+
         this.setState({
+            isCounting:false,
+            lastStopWatchTime:this.lastStopWatchTime,
+            lastDescription:this.lastDescription,
             mode:2
-        })
+        });
+
+        this.setState({historyList:null}) ;
+
+        axios.get(this.props.domain+'/api/getLastDurations')
+            .then(res => this.setState({historyList:res.data})).catch(this.connectionError());
    }
 
    resetStopWatch()
@@ -222,7 +251,7 @@ export default class App extends React.Component
         this.sendCurrentDuration(this.state.lastDescription,this.lastStopWatchTime,true);
         this.lastDescription = '' ;
         this.lastStopWatchTime = 0 ;
-        this.openSubmitListForm();
+        this.openHistoryList();
     }
 
     /**Converts miliseconds to minutes */
@@ -241,7 +270,7 @@ export default class App extends React.Component
     {
 
         let stopWatch =  <div>
-                            <StopWatch time={this.lastStopWatchTime} ref={ref => this.stopWatchComponent = ref }/>
+                            <StopWatch onUnMount={this.stopUpdatingServer.bind(this)} time={this.lastStopWatchTime} ref={ref => this.stopWatchComponent = ref }/>
                             <button onClick={this.toggleStopWatch.bind(this)} className="stop-watch-toggle">{(this.state.isCounting===true)?"STOP":"START"}</button>
                             <button onClick={this.saveUserRecord.bind(this)} className="stop-watch-toggle">Save / Reset</button>
                         </div>;
@@ -258,6 +287,15 @@ export default class App extends React.Component
                     <button onClick={this.updateAndOpenStopWatch.bind(this)} className="stop-watch-toggle">Back</button>
                 
             </div>
+        
+        let historyList = <div>
+                <ul>
+                    {}
+                </ul>
+            </div>;
+
+        let notLoadedHistoryList = <div className="please-wait">Please wait...</div>
+        let emptyHistoryList = <div className="please-wait">No records here.</div>
 
         let bodyPart ;
 
@@ -265,20 +303,47 @@ export default class App extends React.Component
         {
             case 1:
                 bodyPart = inputText ;
-            break;
+                break;
             case 2:
-
-            break
+                if(this.state.historyList===null)
+                {
+                    bodyPart = notLoadedHistoryList ;
+                }
+                else if(this.state.historyList.length===0)
+                {
+                    bodyPart = emptyHistoryList ;
+                }
+                else
+                {
+                    bodyPart = historyList ;
+                }
+            break;
             case 0:
             default:
                 bodyPart = stopWatch;
             break;
         }
+        
+        let pageHeader = '' ;
+
+        switch(this.state.mode)
+        {
+            case 1:
+            case 0:
+                pageHeader = 'Stop Watch' ;
+                break;
+            case 2:
+                pageHeader = 'History' ;
+            break;
+            default:
+            break;
+        }
 
         return(
             <div className="non">
-                <div className="headersection"><h1>Stop Watch</h1></div>
-                <button className="main-button">Stop Watch</button><button className="main-button">History</button>
+                <div className="headersection"><h1>{pageHeader}</h1></div>
+                <button onClick={this.openStopWatch.bind(this)} className="main-button">Stop Watch</button>
+                <button onClick={this.openHistoryList.bind(this)} className="main-button">History</button>
                
                 {bodyPart}
 

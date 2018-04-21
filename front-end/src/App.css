@@ -12,6 +12,8 @@
     --main-buttons-height:30px;
     --main-buttons-height-X2:60px;
     --main-buttons-height-X3:90px;
+
+    --font-size-header:30px;
 }
 
 *{
@@ -36,7 +38,7 @@ body{
 
 h1 { 
     color: var(--wight-color);
-    font-size: 30px; 
+    font-size: var(--font-size-header); 
     font-weight: 5; 
     margin:0;
 }
@@ -125,7 +127,7 @@ button:focus{
     width:100%;
     background-color:var(--main-bg-color);
     height: var(--main-buttons-height);
-    font-size:30px;
+    font-size:var(--font-size-header);
     text-decoration: none;
     margin:0;
 }
@@ -145,7 +147,7 @@ button:focus{
 
 .save-record-button{
     width:100%;
-    font-size:30px;
+    font-size:var(--font-size-header);
     height: var(--main-buttons-height-X3);
 }
 
@@ -156,7 +158,7 @@ input,textarea{
     border: 2px solid var(--gray-bg-color) ;
     font-family: 'Julius Sans One', sans-serif;
     color:#fff;
-    font-size:30px;
+    font-size:var(--font-size-header);
     text-align: center;
     display:block;
 }
@@ -168,11 +170,16 @@ input::selection,textarea::selection{
 label{
     display:block;
     color:#fff;
-    font-size:30px;
+    font-size:var(--font-size-header);
     margin:4px;
 }
 
-
+.please-wait{
+    color:#fff;
+    margin-top:100px;
+    font-size:var(--font-size-header);
+    text-align:center;
+}
 
 
 
