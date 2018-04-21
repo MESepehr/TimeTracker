@@ -69,7 +69,10 @@ class Api extends Controller
             }
 
             $trackedDuration->setDuration($duration);
-            $trackedDuration->setDescription($description);
+            if($description!=null)
+            {
+                $trackedDuration->setDescription($description);
+            }
             
             if($submitdone != "" && $submitdone != "0")
             {

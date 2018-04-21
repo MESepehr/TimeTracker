@@ -28,9 +28,12 @@ export default class App extends React.Component
         }
         /**This is the current timer id to help you save the user time */
         this.currentTimerId = 0 ;
-        this.stopWatchComponent = null ;
         this.updatorTimeoutId = 0 ;
+        
+        this.stopWatchComponent = null ;
+
         this.lastStopWatchTime = 0 ;
+        this.lastDescription = '' ;
     }
 
     componentDidMount()
@@ -66,6 +69,7 @@ export default class App extends React.Component
         {
             this.stopWatchComponent.startFrom(data.data.duration);
             this.currentTimerId = data.data.id ;
+            this.lastDescription = data.data.description ;
         }
     }
 
@@ -101,10 +105,19 @@ export default class App extends React.Component
         console.log("Start updating...");
         this.updatorTimeoutId = setTimeout(this.sendCurrentDuration.bind(this),this.props.updateInterval);
     }
-        sendCurrentDuration()
+        sendCurrentDuration(newDescription,currentTime)
         {
-            console.log("Update server : "+this.props.domain+"api/updateDuration?duration="+this.stopWatchComponent.getCurrentTime()+"&id="+this.currentTimerId);
-            axios.get(this.props.domain+"/api/updateDuration?duration="+this.stopWatchComponent.getCurrentTime()+"&id="+this.currentTimerId)
+            let descriptionPart = '';
+            if(newDescription!==null)
+            {
+                descriptionPart = '&description='+newDescription ;
+            }
+            if(currentTime===null)
+            {
+                currentTime = this.stopWatchComponent.getCurrentTime();
+            }
+            console.log("Update server : "+this.props.domain+"api/updateDuration?duration="+currentTime+"&id="+this.currentTimerId+descriptionPart);
+            axios.get(this.props.domain+"/api/updateDuration?duration="+currentTime+"&id="+this.currentTimerId+descriptionPart)
             .then(this.durationUpdateRespond.bind(this))
             .catch(this.connectinError.bind(this));
         }
@@ -152,6 +165,8 @@ export default class App extends React.Component
         this.lastStopWatchTime = this.stopWatchComponent.getCurrentTime();
 
         this.setState({
+            lastStopWatchTime:this.lastStopWatchTime,
+            lastDescription:this.lastDescription,
             mode:1
         });
    }
@@ -163,7 +178,35 @@ export default class App extends React.Component
         })
    }
 
+   resetStopWatch()
+   {
+        this.lastStopWatchTime = 0 ;
+        this.openStopWatch();
+        setTimeout(this.sendCurrentDuration.bind(this),0);
+   }
 
+    updateAndOpenStopWatch()
+    {
+        if(this.milToMin(this.state.lastStopWatchTime)!==this.milToMin(this.lastStopWatchTime))
+        {
+            this.lastStopWatchTime = this.state.lastStopWatchTime ;
+        }
+        this.sendCurrentDuration(this.state.lastDescription,this.lastStopWatchTime);
+        this.openStopWatch();
+    }
+
+
+    /**Converts miliseconds to minutes */
+    milToMin(mil)
+    {
+        return Math.floor(mil/(1000*60));
+    }
+
+    /**Convets minutes to miliseconds */
+    minToMil(min)
+    {
+        return Number(min)*1000*60;
+    }
 
     render()
     {
@@ -175,9 +218,17 @@ export default class App extends React.Component
                         </div>;
 
         let inputText = <div>
-            <input type="text"/>
-            <button onClick={this.openStopWatch.bind(this)} className="stop-watch-toggle">Back</button>
-        </div>
+                <form>
+                    <label>Duration in minutes : </label>
+                        <input type="number" name="duration" value={this.milToMin(this.state.lastStopWatchTime)} onChange={(ev)=>this.setState({lastStopWatchTime : this.minToMil(ev.target.value)})}/><br/>
+                    <label>Description : </label>
+                        <textarea name="descrip" rows="3" value={this.state.lastDescription} onChange={(ev)=>this.setState({lastDescription : ev.target.value})}></textarea><br/>
+                </form>
+                    <button onClick={()=>0} className="save-record-button">SAVE</button><br/>
+                    <button onClick={this.resetStopWatch.bind(this)} className="stop-watch-toggle">Reset</button>
+                    <button onClick={this.updateAndOpenStopWatch.bind(this)} className="stop-watch-toggle">Back</button>
+                
+            </div>
 
         let bodyPart ;
 
