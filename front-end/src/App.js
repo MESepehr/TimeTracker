@@ -139,10 +139,10 @@ export default class App extends React.Component
             console.log("Update server : "+this.props.domain+"api/updateDuration?duration="+currentTime+"&id="+this.currentTimerId+descriptionPart+submitPart);
             axios.get(this.props.domain+"/api/updateDuration?duration="+currentTime+"&id="+this.currentTimerId+descriptionPart+submitPart)
             .then(onDoneFunction)
-            .catch(this.connectinError);
+            .catch(this.connectinError2.bind(this));
         }
         
-        connectinError(res)
+        connectinError2(res)
         {
             console.log(res);
             if(this.updatorTimeoutId !== 0)//This means timeout called this function befor
@@ -318,18 +318,6 @@ export default class App extends React.Component
                 }
                 else
                 {
-                    /** 
-                     * data base items : {
-                        "id": 15,
-                        "description": "Helo",
-                        "duration": "720000",
-                        "submitdate": {
-                            "date": "2018-04-21 00:00:00.000000",
-                            "timezone_type": 3,
-                            "timezone": "Europe/Berlin"
-                        },
-                        "submitdone": true
-                    } */
                     bodyPart =  <HistoryList list={this.state.historyList}/> ;
                 }
             break;

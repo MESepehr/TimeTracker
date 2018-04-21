@@ -102,9 +102,9 @@ export default class HistoryList extends React.Component{
             listHeight = {height:(window.innerHeight-this.ul.offsetTop-30)+'px'};
         }
 
-        let part1 = {width:'5%'};
+        let part1 = {width:'10%'};
         let part2 = {width:'20%'};
-        let part3 = {width:'45%'};
+        let part3 = {width:'40%'};
         let part4 = {width:'30%'};
 
         let myList = this.props.list;
@@ -130,6 +130,10 @@ export default class HistoryList extends React.Component{
             break;
         }
 
+        let sum = 0 ;
+
+        myList.forEach((item)=>sum+=Number(item.duration));
+
         if(this.state.reverted)
         {
             myList.reverse();
@@ -137,7 +141,7 @@ export default class HistoryList extends React.Component{
 
         return (<div>
             <div onClick={()=>this.changeOrder(0)} className="li-title" style={part1}>Index</div>
-            <div onClick={()=>this.changeOrder(1)} className="li-title" style={part2}>Duration (min)</div>
+            <div onClick={()=>this.changeOrder(1)} className="li-title" style={part2}>Duration (min) total:{Math.floor(sum/(1000*60))}</div>
             <div onClick={()=>this.changeOrder(2)} className="li-title" style={part3}>Description</div>
             <div onClick={()=>this.changeOrder(3)} className="li-title" style={part4}>Submit Date</div>
             <ul style={listHeight} ref={ref=>this.ul=ref}>
