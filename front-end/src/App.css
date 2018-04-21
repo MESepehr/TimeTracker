@@ -127,6 +127,7 @@ button:focus{
     height: var(--main-buttons-height);
     font-size:30px;
     text-decoration: none;
+    margin:0;
 }
 
 
@@ -144,8 +145,33 @@ button:focus{
 
 .save-record-button{
     width:100%;
+    font-size:30px;
     height: var(--main-buttons-height-X3);
 }
+
+input,textarea{
+    width:100%;
+    background-color:#777;
+    /*border-radius:*/
+    border: 2px solid var(--gray-bg-color) ;
+    font-family: 'Julius Sans One', sans-serif;
+    color:#fff;
+    font-size:30px;
+    text-align: center;
+    display:block;
+}
+input::selection,textarea::selection{
+    color:var(--orange-color);
+    background-color:#fff;
+}
+
+label{
+    display:block;
+    color:#fff;
+    font-size:30px;
+    margin:4px;
+}
+
 
 
 

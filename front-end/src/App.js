@@ -23,12 +23,17 @@ export default class App extends React.Component
     {
         super(props);
         this.state = {
-            isCounting:false
+            isCounting:false,
+            mode:0//0: stop watch, 1: input text to save, 2: submited list
         }
         /**This is the current timer id to help you save the user time */
         this.currentTimerId = 0 ;
-        this.stopWatchComponent = null ;
         this.updatorTimeoutId = 0 ;
+        
+        this.stopWatchComponent = null ;
+
+        this.lastStopWatchTime = 0 ;
+        this.lastDescription = '' ;
     }
 
     componentDidMount()
@@ -64,6 +69,7 @@ export default class App extends React.Component
         {
             this.stopWatchComponent.startFrom(data.data.duration);
             this.currentTimerId = data.data.id ;
+            this.lastDescription = data.data.description ;
         }
     }
 
@@ -99,10 +105,25 @@ export default class App extends React.Component
         console.log("Start updating...");
         this.updatorTimeoutId = setTimeout(this.sendCurrentDuration.bind(this),this.props.updateInterval);
     }
-        sendCurrentDuration()
+        sendCurrentDuration(newDescription,currentTime,submitdone)
         {
-            console.log("Update server : "+this.props.domain+"api/updateDuration?duration="+this.stopWatchComponent.getCurrentTime()+"&id="+this.currentTimerId);
-            axios.get(this.props.domain+"/api/updateDuration?duration="+this.stopWatchComponent.getCurrentTime()+"&id="+this.currentTimerId)
+            let descriptionPart = '';
+            if(newDescription!==null)
+            {
+                descriptionPart = '&description='+newDescription ;
+            }
+            if(currentTime===null)
+            {
+                currentTime = this.stopWatchComponent.getCurrentTime();
+            }
+
+            let submitPart = '' ;
+            if(submitdone===true)
+            {
+                submitPart = '&submitdone=1';
+            }
+            console.log("Update server : "+this.props.domain+"api/updateDuration?duration="+currentTime+"&id="+this.currentTimerId+descriptionPart+submitPart);
+            axios.get(this.props.domain+"/api/updateDuration?duration="+currentTime+"&id="+this.currentTimerId+descriptionPart+submitPart)
             .then(this.durationUpdateRespond.bind(this))
             .catch(this.connectinError.bind(this));
         }
@@ -147,22 +168,120 @@ export default class App extends React.Component
         this.setState({isCounting:false});
         this.stopWatchComponent.stop();
         this.stopUpdatingServer();
+        this.lastStopWatchTime = this.stopWatchComponent.getCurrentTime();
+
+        this.setState({
+            lastStopWatchTime:this.lastStopWatchTime,
+            lastDescription:this.lastDescription,
+            mode:1
+        });
    }
 
+   openStopWatch()
+   {
+        this.setState({
+            mode:0
+        })
+   }
 
+   openSubmitListForm()
+   {
+        this.setState({
+            mode:2
+        })
+   }
+
+   resetStopWatch()
+   {
+        this.lastDescription = '' ;
+        this.lastStopWatchTime = 0 ;
+        this.sendCurrentDuration(this.lastDescription,this.lastStopWatchTime);
+        this.openStopWatch();
+        setTimeout(this.sendCurrentDuration.bind(this),0);
+   }
+
+    updateAndOpenStopWatch()
+    {
+        if(this.milToMin(this.state.lastStopWatchTime)!==this.milToMin(this.lastStopWatchTime))
+        {
+            this.lastStopWatchTime = this.state.lastStopWatchTime ;
+        }
+        this.lastDescription = this.state.lastDescription ;
+        this.sendCurrentDuration(this.state.lastDescription,this.lastStopWatchTime);
+        this.openStopWatch();
+    }
+
+
+    saveThisFormAndGoToList()
+    {
+        if(this.milToMin(this.state.lastStopWatchTime)!==this.milToMin(this.lastStopWatchTime))
+        {
+            this.lastStopWatchTime = this.state.lastStopWatchTime ;
+        }
+        this.lastDescription = this.state.lastDescription ;
+        this.sendCurrentDuration(this.state.lastDescription,this.lastStopWatchTime,true);
+        this.lastDescription = '' ;
+        this.lastStopWatchTime = 0 ;
+        this.openSubmitListForm();
+    }
+
+    /**Converts miliseconds to minutes */
+    milToMin(mil)
+    {
+        return Math.floor(mil/(1000*60));
+    }
+
+    /**Convets minutes to miliseconds */
+    minToMil(min)
+    {
+        return Number(min)*1000*60;
+    }
 
     render()
     {
+
+        let stopWatch =  <div>
+                            <StopWatch time={this.lastStopWatchTime} ref={ref => this.stopWatchComponent = ref }/>
+                            <button onClick={this.toggleStopWatch.bind(this)} className="stop-watch-toggle">{(this.state.isCounting===true)?"STOP":"START"}</button>
+                            <button onClick={this.saveUserRecord.bind(this)} className="stop-watch-toggle">Save / Reset</button>
+                        </div>;
+
+        let inputText = <div>
+                <form>
+                    <label>Duration in minutes : </label>
+                        <input type="number" name="duration" value={this.milToMin(this.state.lastStopWatchTime)} onChange={(ev)=>this.setState({lastStopWatchTime : this.minToMil(ev.target.value)})}/><br/>
+                    <label>Description : </label>
+                        <textarea name="descrip" rows="3" value={this.state.lastDescription} onChange={(ev)=>this.setState({lastDescription : ev.target.value})}></textarea><br/>
+                </form>
+                    <button onClick={this.saveThisFormAndGoToList.bind(this)} className="save-record-button">SAVE</button><br/>
+                    <button onClick={this.resetStopWatch.bind(this)} className="stop-watch-toggle">Reset</button>
+                    <button onClick={this.updateAndOpenStopWatch.bind(this)} className="stop-watch-toggle">Back</button>
+                
+            </div>
+
+        let bodyPart ;
+
+        switch(this.state.mode)
+        {
+            case 1:
+                bodyPart = inputText ;
+            break;
+            case 2:
+
+            break
+            case 0:
+            default:
+                bodyPart = stopWatch;
+            break;
+        }
+
         return(
             <div className="non">
                 <div className="headersection"><h1>Stop Watch</h1></div>
                 <button className="main-button">Stop Watch</button><button className="main-button">History</button>
-                <div>
-                    <StopWatch time={0} ref={ref => this.stopWatchComponent = ref }/>
-                    <button onClick={this.toggleStopWatch.bind(this)} className="stop-watch-toggle">{(this.state.isCounting===true)?"STOP":"START"}</button>
-                    <button onClick={this.saveUserRecord.bind(this)} className="stop-watch-toggle">Save / Reset</button>
-                </div>
-                
+               
+                {bodyPart}
+
                 <div className="footer">
                     <div className="footer-back-ground">Icons made by Yannick from www.flaticon.com is licensed by CC 3.0 BY</div>       
                 </div>
