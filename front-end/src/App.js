@@ -24,7 +24,7 @@ export default class App extends React.Component
         super(props);
         this.state = {
             isCounting:false,
-            historyList:null,//This is the list of saved items
+            historyList:[],//This is the list of saved items
             mode:0//0: stop watch, 1: input text to save, 2: submited list
         }
         /**This is the current timer id to help you save the user time */
@@ -132,7 +132,7 @@ export default class App extends React.Component
             console.log("Update server : "+this.props.domain+"api/updateDuration?duration="+currentTime+"&id="+this.currentTimerId+descriptionPart+submitPart);
             axios.get(this.props.domain+"/api/updateDuration?duration="+currentTime+"&id="+this.currentTimerId+descriptionPart+submitPart)
             .then(this.durationUpdateRespond.bind(this))
-            .catch(this.connectinError.bind(this));
+            .catch(this.connectinError.bind);
         }
         
         connectinError(res)
@@ -217,7 +217,8 @@ export default class App extends React.Component
         this.setState({historyList:null}) ;
 
         axios.get(this.props.domain+'/api/getLastDurations')
-            .then(res => this.setState({historyList:res.data})).catch(this.connectionError());
+            .then(res => this.setState({historyList:res.data})).catch(err=>alert(err))
+            .catch(this.connectionError);
    }
 
    resetStopWatch()
@@ -288,11 +289,6 @@ export default class App extends React.Component
                 
             </div>
         
-        let historyList = <div>
-                <ul>
-                    {}
-                </ul>
-            </div>;
 
         let notLoadedHistoryList = <div className="please-wait">Please wait...</div>
         let emptyHistoryList = <div className="please-wait">No records here.</div>
@@ -315,7 +311,22 @@ export default class App extends React.Component
                 }
                 else
                 {
-                    bodyPart = historyList ;
+                    /** {
+                        "id": 15,
+                        "description": "Helo",
+                        "duration": "720000",
+                        "submitdate": {
+                            "date": "2018-04-21 00:00:00.000000",
+                            "timezone_type": 3,
+                            "timezone": "Europe/Berlin"
+                        },
+                        "submitdone": true
+                    } */
+                    bodyPart =  <div>
+                                    <ul>
+                                        {this.state.historyList.map((item,index) => <li>{index}.</li>)}
+                                    </ul>
+                                </div> ;
                 }
             break;
             case 0:
