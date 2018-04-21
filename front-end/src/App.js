@@ -24,7 +24,7 @@ export default class App extends React.Component
         super(props);
         this.state = {
             isCounting:false,
-            mode:0//0: stop watch, 1: input text to save
+            mode:0//0: stop watch, 1: input text to save, 2: submited list
         }
         /**This is the current timer id to help you save the user time */
         this.currentTimerId = 0 ;
@@ -105,7 +105,7 @@ export default class App extends React.Component
         console.log("Start updating...");
         this.updatorTimeoutId = setTimeout(this.sendCurrentDuration.bind(this),this.props.updateInterval);
     }
-        sendCurrentDuration(newDescription,currentTime)
+        sendCurrentDuration(newDescription,currentTime,submitdone)
         {
             let descriptionPart = '';
             if(newDescription!==null)
@@ -116,8 +116,14 @@ export default class App extends React.Component
             {
                 currentTime = this.stopWatchComponent.getCurrentTime();
             }
-            console.log("Update server : "+this.props.domain+"api/updateDuration?duration="+currentTime+"&id="+this.currentTimerId+descriptionPart);
-            axios.get(this.props.domain+"/api/updateDuration?duration="+currentTime+"&id="+this.currentTimerId+descriptionPart)
+
+            let submitPart = '' ;
+            if(submitdone===true)
+            {
+                submitPart = '&submitdone=1';
+            }
+            console.log("Update server : "+this.props.domain+"api/updateDuration?duration="+currentTime+"&id="+this.currentTimerId+descriptionPart+submitPart);
+            axios.get(this.props.domain+"/api/updateDuration?duration="+currentTime+"&id="+this.currentTimerId+descriptionPart+submitPart)
             .then(this.durationUpdateRespond.bind(this))
             .catch(this.connectinError.bind(this));
         }
@@ -178,6 +184,13 @@ export default class App extends React.Component
         })
    }
 
+   openSubmitListForm()
+   {
+        this.setState({
+            mode:2
+        })
+   }
+
    resetStopWatch()
    {
         this.lastDescription = '' ;
@@ -198,6 +211,19 @@ export default class App extends React.Component
         this.openStopWatch();
     }
 
+
+    saveThisFormAndGoToList()
+    {
+        if(this.milToMin(this.state.lastStopWatchTime)!==this.milToMin(this.lastStopWatchTime))
+        {
+            this.lastStopWatchTime = this.state.lastStopWatchTime ;
+        }
+        this.lastDescription = this.state.lastDescription ;
+        this.sendCurrentDuration(this.state.lastDescription,this.lastStopWatchTime,true);
+        this.lastDescription = '' ;
+        this.lastStopWatchTime = 0 ;
+        this.openSubmitListForm();
+    }
 
     /**Converts miliseconds to minutes */
     milToMin(mil)
@@ -227,7 +253,7 @@ export default class App extends React.Component
                     <label>Description : </label>
                         <textarea name="descrip" rows="3" value={this.state.lastDescription} onChange={(ev)=>this.setState({lastDescription : ev.target.value})}></textarea><br/>
                 </form>
-                    <button onClick={()=>0} className="save-record-button">SAVE</button><br/>
+                    <button onClick={this.saveThisFormAndGoToList.bind(this)} className="save-record-button">SAVE</button><br/>
                     <button onClick={this.resetStopWatch.bind(this)} className="stop-watch-toggle">Reset</button>
                     <button onClick={this.updateAndOpenStopWatch.bind(this)} className="stop-watch-toggle">Back</button>
                 
@@ -240,6 +266,9 @@ export default class App extends React.Component
             case 1:
                 bodyPart = inputText ;
             break;
+            case 2:
+
+            break
             case 0:
             default:
                 bodyPart = stopWatch;
