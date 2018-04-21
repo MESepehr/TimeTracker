@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import PropTypes from 'prop-types';
 import StopWatch from './components/stopwatch/StopWatch';
+import HistoryList from './components/HistoryList';
 import axios from 'axios';
 
 
@@ -329,11 +330,7 @@ export default class App extends React.Component
                         },
                         "submitdone": true
                     } */
-                    bodyPart =  <div>
-                                    <ul>
-                                        {this.state.historyList.map((item,index) => <li>{index}.</li>)}
-                                    </ul>
-                                </div> ;
+                    bodyPart =  <HistoryList list={this.state.historyList}/> ;
                 }
             break;
             case 0:
