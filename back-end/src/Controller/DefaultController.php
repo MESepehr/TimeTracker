@@ -18,7 +18,7 @@ class DefaultController extends Controller
         $response->headers->set('Access-Control-Allow-Origin', '*');
 
       
-        $response->setContent("Hello home");
+        $response->setContent("<html><br><br><br><br><br><h1 align='center'>Np preview. the front-end project is going to handle all.</h1></html>");
         return $response;
     }
 }
