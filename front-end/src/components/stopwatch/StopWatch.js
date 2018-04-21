@@ -163,6 +163,8 @@ export default class StopWatch extends React.Component
 
     start()
     {
+        this.startDate = Date.now() ;
+        this.initTime = this.state.time ;
         this.intervalId = setInterval(this.incraeseTime.bind(this),this.props.interval);
     }
 
@@ -170,7 +172,7 @@ export default class StopWatch extends React.Component
         {
             //console.log("typeof : "+typeof(this.state.time))
             this.setState({
-                time:Number(this.state.time)+Number(this.props.interval)
+                time:Number(this.initTime)+Number(Date.now()-this.startDate)
             });
             //console.log("this.state.time : "+this.state.time);
         }
