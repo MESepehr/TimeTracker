@@ -160,7 +160,7 @@ export default class App extends React.Component
                 <div>
                     <StopWatch time={0} ref={ref => this.stopWatchComponent = ref }/>
                     <button onClick={this.toggleStopWatch.bind(this)} className="stop-watch-toggle">{(this.state.isCounting===true)?"STOP":"START"}</button>
-                    <button onClick={this.saveUserRecord.bind(this)} className="stop-watch-toggle">Save Record</button>
+                    <button onClick={this.saveUserRecord.bind(this)} className="stop-watch-toggle">Save / Reset</button>
                 </div>
                 
                 <div className="footer">
