@@ -10,13 +10,13 @@ export default class App extends React.Component
     static defaultProps = 
     {
         domain:null,
-        updateInterval:2100
+        updateInterval:5000//It has to override by the callser component
     }
 
     static propTypes = 
     {
         domain:PropTypes.string.isRequired,
-        updateInterval:PropTypes.number
+        updateInterval:PropTypes.number.isRequired
     }
 
     constructor(props)
