@@ -1,4 +1,4 @@
-<p align="center"><h2 align="center">Time Tracker</h2><p align="center">This is a sample project using React, Symfony and mySQL<p><br>
+<p align="center"><h2 align="center">Time Tracker</h2>
     <img  src="https://github.com/MESepehr/TimeTracker/blob/Documentation/Doc/images/Network.png"/>  
 </p>
 
@@ -6,7 +6,7 @@
 <br>
 <br>
 
-## How To Run Demo
+## How To Run
 The project has 2 separated parts. Front-end, developed using React and the back-end, developed using Symfony. I have stored a database SQL file for mySql. You can find it on the database folder in the project. Follow below steps to run the project on your local machine:<br>
 <ol>
    <li>Import the database/timetrackerdb.sql to mySql.</li>
@@ -17,6 +17,7 @@ The project has 2 separated parts. Front-end, developed using React and the back
 If every thing is correct, you can see the chronometer in the black window and shouldn’t prompt any connection errors.  You have to control that both server ( React yarn and Symfony php ) are running to gather.<br>
 <p align="center"><img height="200px" src="https://github.com/MESepehr/TimeTracker/blob/Documentation/Doc/images/Home.PNG?raw=true"/></p>
 <br>
+
 ## Project Documentation
 <p align="center">
    <img height="300px" src="https://github.com/MESepehr/TimeTracker/blob/master/Doc/UseCase.png"/><p align="center">Use case diagram</p>
@@ -57,3 +58,5 @@ I preferred to combine data base fetching with client side sorting. it has bette
    <img width="400px" src="https://github.com/MESepehr/TimeTracker/blob/Documentation/Doc/images/History%20page.PNG?raw=true"/>
    <img width="400px" src="https://github.com/MESepehr/TimeTracker/blob/Documentation/Doc/Loading%20history.png?raw=true"/>
 </p>
+
+Pressing the table titles making the table sort by that lable.
