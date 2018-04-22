@@ -23,7 +23,7 @@ If every thing is correct, you can see the chronometer in the black window and s
    <img height="300px" src="https://github.com/MESepehr/TimeTracker/blob/master/Doc/UseCase.png"/><p align="center">Use case diagram</p>
 </p>
 <p align="center">
-   <img src="https://github.com/MESepehr/TimeTracker/blob/Documentation/Doc/DataBase.png?raw=true"/><p align="center">Data base diagram (users table didn't used on the current level project)</p>
+   <img src="https://github.com/MESepehr/TimeTracker/blob/Documentation/Doc/DataBase.png?raw=true"/><p align="center">Data base diagram (user table didn't used on the current level of project)</p>
 </p><br>
 
 ## How it works
