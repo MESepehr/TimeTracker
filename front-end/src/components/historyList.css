@@ -23,6 +23,7 @@ ul{
 .li-parts{
     display:inline-block;
     padding:0;
+    white-space: nowrap;
     overflow:hidden;
 }
 

@@ -126,7 +126,7 @@ button:focus{
 .stop-watch-toggle{
     width:100%;
     background-color:var(--main-bg-color);
-    height: var(--main-buttons-height);
+    height: var(--main-buttons-height-X2);
     font-size:var(--font-size-header);
     text-decoration: none;
     margin:0;

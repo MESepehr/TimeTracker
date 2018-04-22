@@ -140,7 +140,7 @@ export default class HistoryList extends React.Component{
         }
 
         return (<div>
-            <div onClick={()=>this.changeOrder(0)} className="li-title" style={part1}>Index</div>
+            <div onClick={()=>this.changeOrder(0)} className="li-title" style={part1}>Order</div>
             <div onClick={()=>this.changeOrder(1)} className="li-title" style={part2}>Duration (min) total:{Math.floor(sum/(1000*60))}</div>
             <div onClick={()=>this.changeOrder(2)} className="li-title" style={part3}>Description</div>
             <div onClick={()=>this.changeOrder(3)} className="li-title" style={part4}>Submit Date</div>
